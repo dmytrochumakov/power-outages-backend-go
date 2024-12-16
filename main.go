@@ -15,13 +15,18 @@ type apiConfig struct {
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatalf("Error loading .env file")
-		return
+		log.Printf("warning: assuming default configuration. .env unreadable: %v", err)
 	}
+
 	cfg := apiConfig{
 		APIKey: os.Getenv("API_KEY"),
 	}
-	const port = "8080"
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("PORT environment variable is is not set")
+	}
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /api/power-outages-time", cfg.handlerPowerOutagesTime)
 
