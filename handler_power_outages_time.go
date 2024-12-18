@@ -2,25 +2,11 @@ package main
 
 import (
 	"errors"
-	"log"
 	"net/http"
 	"time"
-
-	"github.com/dmytrochumakov/power-outages-backend/internal/auth"
 )
 
 func (cfg *apiConfig) handlerPowerOutagesTime(w http.ResponseWriter, r *http.Request) {
-	apiKey, err := auth.GetAPIKey(r.Header)
-	if err != nil {
-		write401Error(w)
-		return
-	}
-	if apiKey != cfg.APIKey {
-		log.Printf("Invalid API key: %s", apiKey)
-		write401Error(w)
-		return
-	}
-
 	type response struct {
 		PowerOutagesTime string `json:"power_outages_time"`
 	}

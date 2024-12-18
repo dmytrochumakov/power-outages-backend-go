@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-func write401Error(w http.ResponseWriter) {
-	writeError(w, 401, "401 Unauthorized")
-}
-
 func writeError(w http.ResponseWriter, code int, error string) {
 	type responseError struct {
 		Error string `json:"error"`
